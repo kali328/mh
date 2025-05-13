@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLM Launcher</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 180px;
+        }
+
+            button:hover {
+                background-color: #0056b3;
+            }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>LLM Launcher</h1>
+        <input type="text" id="messageInput" placeholder="Enter your message here..." />
+        <div class="button-container">
+            <button onclick="sendToLLM('chatgpt')">Send to ChatGPT</button>
+            <button onclick="sendToLLM('playground')">Send to Playground</button>
+            <button onclick="sendToLLM('oobabooga')">Send to Oobabooga</button>
+            <button onclick="sendToLLM('claude')">Send to Claude</button>
+            <button onclick="sendToLLM('gemini')">Send to Gemini</button>
+        </div>
+    </div>
+
+    <script>
+    function sendToLLM(model) {
+      let msg = document.getElementById('messageInput').value;
+      if (!msg) {
+        alert("Please enter a message!");
+        return;
+      }
+
+      let url = "";
+      switch(model.toLowerCase()) {
+        case 'chatgpt':
+          url = "https://chat.openai.com/?q=" + encodeURIComponent(msg);
+          break;
+        case 'playground':
+          url = "https://platform.openai.com/playground?text=" + encodeURIComponent(msg);
+          break;
+        case 'oobabooga':
+          url = "http://localhost:7860/?prompt=" + encodeURIComponent(msg); // For local models
+          break;
+        case 'claude':
+          url = "https://claude.ai/" + encodeURIComponent(msg); // Example link
+          break;
+        case 'gemini':
+          url = "https://chat.google.com/?q=" + encodeURIComponent(msg); // Example link
+          break;
+        default:
+          alert("Unknown model: " + model);
+          return;
+      }
+
+      window.open(url, "_blank");
+    }
+    </script>
+
+</body>
+</html>
